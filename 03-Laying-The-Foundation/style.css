@@ -1,0 +1,27 @@
+*{
+    padding: 0;
+    margin:0 ;
+    box-sizing: border-box;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgba(233, 233, 245, 0.655);
+    height: 4vw;
+}
+.user{
+    width: 40px;
+    height: 40px;
+}
+.navbar>input{
+    width: 20vw;
+    height: 2vw;
+    padding: 15px 10px;
+    border-radius: 20px;
+    border: none;
+}
+.logo{
+    width: 40px;
+    height: 40px;
+}

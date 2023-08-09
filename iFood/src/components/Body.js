@@ -3,6 +3,7 @@ import ResCard from "./ResCard";
 
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 
 const Body = () => {
@@ -17,7 +18,7 @@ const Body = () => {
     SetfilterRestraunt(filteredList);
   }
   const fetchData = async () => {
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.8761653&lng=75.3433139&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
     const json = await data.json()
 
     console.log(json)
@@ -49,7 +50,9 @@ const Body = () => {
       </div>
       <div className="card-Container">
         {filterRestraunt.map((restr) => (
-          <ResCard key={restr.info.id} resData={...restr.info} />
+          <Link key={restr.info.id} to={"/restraunt/"+restr.info.id}>
+          <ResCard  resData={...restr.info} />
+          </Link>
         ))}
       </div>
     </div>

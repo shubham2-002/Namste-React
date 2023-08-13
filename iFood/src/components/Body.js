@@ -9,7 +9,6 @@ import { RESTRAU_LIST } from "../utils/constant";
 
 const Body = () => {
 
-
   const [newreList1, setNewreList] = useState([]);
   const [filterRestraunt,SetfilterRestraunt] = useState([]);
   const [search, Setsearch] = useState("");
@@ -22,7 +21,7 @@ const Body = () => {
     const data = await fetch(RESTRAU_LIST)
     const json = await data.json()
 
-    console.log(json)
+    // console.log(json)
     setNewreList(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     SetfilterRestraunt(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
   }

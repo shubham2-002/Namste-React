@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RESTRAU_LIST } from "../utils/constant";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 
 const Body = () => {
@@ -28,7 +29,14 @@ const Body = () => {
   useEffect(() => {
     fetchData()
   }, [])
+  const onlinestatus= useOnlineStatus()
 
+  if(!onlinestatus){
+    return(
+    <h1>Looks like Your are offline</h1>
+    )
+  }
+  
   if (newreList1.length === 0) {
     return <Shimmer />
   }

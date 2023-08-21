@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ResCard from "./ResCard";
+import ResCard ,{withOfferLabel }from "./ResCard";
 
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RESTRAU_LIST } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { withOfferLabel } from "./ResCard";
 
 
 const Body = () => {
@@ -13,6 +14,8 @@ const Body = () => {
   const [newreList1, setNewreList] = useState([]);
   const [filterRestraunt,SetfilterRestraunt] = useState([]);
   const [search, Setsearch] = useState("");
+
+  const RescardOffer= withOfferLabel(ResCard) //HIGER ORDER COMPONENT
 
   const searchDish = () => {
     const filteredList = newreList1.filter((res) => res?.info.name.toLowerCase().includes(search.toLowerCase()))
@@ -23,8 +26,8 @@ const Body = () => {
     const json = await data.json()
 
     // console.log(json)
-    setNewreList(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    SetfilterRestraunt(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    setNewreList(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    SetfilterRestraunt(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
   }
   useEffect(() => {
     fetchData()
@@ -42,10 +45,10 @@ const Body = () => {
   }
   return (
     <div className="body">
-      <div className="search">
-        <input className="search-bar" placeholder="search your local restarunt" onChange={(e) => Setsearch(e.target.value)} />
+      <div className="m-4 p-4 flex justify-center items-center">{/*search*/}
+        <input className=" border-b-2 border-blue-300 focus:bg-blue-50 py-1 px-4 w-64" placeholder="search your local restarunt" onChange={(e) => Setsearch(e.target.value)} />
         <button
-          className="filter-btn"
+          className="px-4 bg-green-100 py-1 hover:bg-green-200 mx-8 rounded-lg"
           onClick={() => {
             const filteredList = newreList1.filter((res) => res?.info.avgRating > 4)
             SetfilterRestraunt(filteredList);
@@ -54,17 +57,19 @@ const Body = () => {
         >
           Top Rated Restaurants
         </button>
-        <button className="ser-btn" onClick={searchDish}>Search</button>
+        <button className=" rounded-lg px-4 bg-green-100 py-1 hover:bg-green-200" onClick={searchDish}>Search</button>
       </div>
-      <div className="card-Container">
+      <div className="flex flex-wrap">
         {filterRestraunt.map((restr) => (
 
           // <ResCard  resData={...restr.info} key ={restr.info.id}/>
           <Link key={restr.info.id} to={"/restraunt/"+restr.info.id}>
-          <ResCard  resData={...restr.info} />
-          </Link>
-        
-           
+            {restr.info.aggregatedDiscountInfoV3.hasOwnProperty('header')?
+            (<RescardOffer resData={...restr.info}/>
+            ) : (
+            <ResCard resData={...restr.info}/>
+            )}
+          </Link>     
         ))}
       </div>
     </div>

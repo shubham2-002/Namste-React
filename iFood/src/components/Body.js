@@ -28,7 +28,7 @@ const Body = () => {
     // console.log(json)
     setNewreList(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     SetfilterRestraunt(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    console.log(json?.data)
+    // console.log(json?.data)
   }
   useEffect(() => {
     fetchData()

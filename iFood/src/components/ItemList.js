@@ -2,7 +2,7 @@ import { CDN_URL } from "../utils/constant";
 
 const ItemList = ({ items }) => {
   return (
-    <div>
+    <div >
       <div>
         {items.map((item) => (
           <div
@@ -11,8 +11,8 @@ const ItemList = ({ items }) => {
           >
             <div className="flex justify-between p-4">
               <div className="my-4  flex flex-col w-8/12">
-                <span className="text-xl font-bold">{item.card.info.name}</span>
-                <span className="text-lg font-semibold">
+                <span className="text-lg font-semibold">{item.card.info.name}</span>
+                <span className="text-sm font-semibold">
                   Rs {item.card.info.price / 100}
                 </span>
                 <p className="my-4 text-gray-500 text-sm">

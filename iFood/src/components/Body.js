@@ -3,7 +3,7 @@ import ResCard ,{withOfferLabel }from "./ResCard";
 
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import { RESTRAU_LIST } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { withOfferLabel } from "./ResCard";
@@ -28,6 +28,7 @@ const Body = () => {
     // console.log(json)
     setNewreList(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     SetfilterRestraunt(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    console.log(json?.data)
   }
   useEffect(() => {
     fetchData()
@@ -64,7 +65,7 @@ const Body = () => {
 
           // <ResCard  resData={...restr.info} key ={restr.info.id}/>
           <Link key={restr.info.id} to={"/restraunt/"+restr.info.id}>
-            {restr.info.aggregatedDiscountInfoV3.hasOwnProperty('header')?
+            {Object.hasOwn(restr?.info,'header')?
             (<RescardOffer resData={...restr.info}/>
             ) : (
             <ResCard resData={...restr.info}/>

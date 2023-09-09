@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import ItemList from "./ItemList";
-const RestrauntCategory = ({ data }) => {
-  //   console.log(data);
-  const [showItem, SetshowItem] = useState(false);
+const RestrauntCategory = ({ data,setShowidx,showItems }) => {
+    // console.log(data);
+  
   const handelClick = () => {
-    SetshowItem(!showItem);
+    setShowidx()
+    
   };
   return (
     <div className="grid place-items-center">
@@ -14,13 +15,13 @@ const RestrauntCategory = ({ data }) => {
         onClick={() => handelClick()}
       >
         <div className="flex justify-between mb-4 cursor-pointer">
-          <span className="font-semibold">
+          <span className="text-lg font-bold">
             {data.title} ({data.itemCards.length})
           </span>
           <span>🔽</span>
         </div>
         {/* {Accordian Body} */}
-        {showItem && <ItemList items={data.itemCards} />}
+        {showItems && <ItemList items={data.itemCards} />}
       </div>
     </div>
   );

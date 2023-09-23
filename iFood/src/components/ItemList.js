@@ -22,9 +22,9 @@ const ItemList = ({ items }) => {
               <div className="w-1/4 bg-slate-200 rounded-md">
                 <img src={CDN_URL + item.card.info.imageId} />
               </div>
-              <span className=" cursor-pointer absolute font-semibold right-96 mt-20 mr-4 text-white bg-black p-2 rounded-md text-xs">
+              <button className=" cursor-pointer absolute font-semibold right-96 mt-20 mr-4 text-white bg-black p-2 rounded-md text-xs">
                 ADD +
-              </span>
+              </button>
             </div>
           </div>
         ))}

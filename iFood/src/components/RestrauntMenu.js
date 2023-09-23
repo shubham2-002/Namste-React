@@ -24,7 +24,7 @@ const RestrauntMenu = () => {
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
 
-  // console.log(categories);
+  // console.log(categories);joyisoc353@chambile.com temp mail
   return (
     <div className=" text-center my-10 ">
       <h1 className="font-bold text-2xl my-4">{name} </h1>

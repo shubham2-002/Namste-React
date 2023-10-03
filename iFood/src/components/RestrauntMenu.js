@@ -15,7 +15,7 @@ const RestrauntMenu = () => {
   // console.log(resInfo);
   const { name, cuisines } = resInfo?.cards[0]?.card?.card?.info;
 
-  console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards);
+  // console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards);
 
   const categories =
     resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter(

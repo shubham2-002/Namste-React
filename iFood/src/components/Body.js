@@ -7,19 +7,24 @@ import { Link, json } from "react-router-dom";
 import { RESTRAU_LIST } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { withOfferLabel } from "./ResCard";
+import FetchNext from "../utils/getMoreRes"
 
 
 const Body = () => {
-
   const [newreList1, setNewreList] = useState([]);
   const [filterRestraunt,SetfilterRestraunt] = useState([]);
   const [search, Setsearch] = useState("");
-
+//  const [loading,setLoading]= useState(false)
   const RescardOffer= withOfferLabel(ResCard) //HIGER ORDER COMPONENT
-
+  // const[page,setPage] = useState(10)
   const searchDish = () => {
     const filteredList = newreList1.filter((res) => res?.info.name.toLowerCase().includes(search.toLowerCase()))
     SetfilterRestraunt(filteredList);
+  }
+
+  const LoadMore = async()=>{
+    const data =FetchNext()
+    console.log(data)
   }
   const fetchData = async () => {
     const data = await fetch(RESTRAU_LIST)
@@ -58,7 +63,7 @@ const Body = () => {
         >
           Top Rated Restaurants
         </button>
-        <button className=" rounded-lg px-4 bg-green-100 py-1 hover:bg-green-200" onClick={searchDish}>Search</button>
+        <button className=" rounded-lg px-4 bg-green-100 py-1 hover:bg-green-200" onClick={()=>searchDish()}>Search</button>
       </div>
       <div className="flex flex-wrap">
         {filterRestraunt.map((restr) => (
@@ -72,6 +77,9 @@ const Body = () => {
             )}
           </Link>     
         ))}
+        <div>
+          <button className="bg-black" onClick={()=>LoadMore()}>MORE</button>
+        </div>
       </div>
     </div>
   );

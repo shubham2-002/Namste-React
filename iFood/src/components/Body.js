@@ -7,13 +7,17 @@ import { Link, json } from "react-router-dom";
 import { RESTRAU_LIST } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { withOfferLabel } from "./ResCard";
-import FetchNext from "../utils/getMoreRes"
+
 
 
 const Body = () => {
   const [newreList1, setNewreList] = useState([]);
   const [filterRestraunt,SetfilterRestraunt] = useState([]);
   const [search, Setsearch] = useState("");
+  const [page,setPage]= useState(25)
+  const [data, Setdata] = useState([]);
+  const[menucard,Setmenucard]= useState()
+
 //  const [loading,setLoading]= useState(false)
   const RescardOffer= withOfferLabel(ResCard) //HIGER ORDER COMPONENT
   // const[page,setPage] = useState(10)
@@ -22,10 +26,7 @@ const Body = () => {
     SetfilterRestraunt(filteredList);
   }
 
-  const LoadMore = async()=>{
-    const data =FetchNext()
-    console.log(data)
-  }
+ 
   const fetchData = async () => {
     const data = await fetch(RESTRAU_LIST)
     const json = await data.json()
@@ -38,6 +39,63 @@ const Body = () => {
   useEffect(() => {
     fetchData()
   }, [])
+
+  //Fetch Netxt 15
+const fetchNext=async ()=>{
+  try {
+    const response = await fetch(
+      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/update",
+      {
+        method: "POST", // Use POST for fetching more restaurants
+        headers: {
+          "Content-Type": "application/json",
+          // Add any additional headers here
+        },
+        body: JSON.stringify({
+          lat: 18.5204303,
+          lng: 73.8567437,
+          nextOffset: "COVCELQ4KID4ruup+9+KczCnEzgD", // Use the correct nextOffset value
+          // Other payload parameters if needed
+          seoParams: {
+            apiName: "FoodHomePage",
+            pageType: "FOOD_HOMEPAGE",
+            seoUrl: "https://www.swiggy.com/",
+          },
+          widgetOffset: {
+            // Include your widgetOffset values here
+            NewListingView_Topical_Fullbleed: "",
+            NewListingView_category_bar_chicletranking_TwoRows: "",
+            NewListingView_category_bar_chicletranking_TwoRows_Rendition: "",
+            collectionV5RestaurantListWidget_SimRestoRelevance_food_seo:
+              String(page),
+          },
+        }),
+      }
+    );
+    Setdata( await response.json())
+    console.log(data)
+    Setmenucard(
+      data.data.cards[0].card.card.gridElements.infoWithStyle.restaurants)
+
+      if (newreList1) {
+
+        let newRestaurants = data.data.cards[0].card.card.gridElements.infoWithStyle.restaurants;
+
+        SetfilterRestraunt((prevRestaurants) => [...prevRestaurants, ...newRestaurants]);
+        setNewreList((prevRestaurants) => [...prevRestaurants, ...newRestaurants]);
+      }
+  } catch (error) {
+    console.error("Error fetching restaurants:", error);
+  } finally {
+    // Setloading(false);
+    setPage(page+15)
+  }
+}
+
+
+
+
+
   const onlinestatus= useOnlineStatus()
 
   if(!onlinestatus){
@@ -77,10 +135,13 @@ const Body = () => {
             )}
           </Link>     
         ))}
-        <div>
-          <button className="bg-black" onClick={()=>LoadMore()}>MORE</button>
-        </div>
       </div>
+        <div className="flex justify-center m-8">
+          <button className=" px-6 py-2 rounded-md tex
+           bg-green-300 active:bg-transparent
+            active:text-black hover:outline  
+            " onClick={()=>fetchNext()}>MORE</button>
+        </div>
     </div>
   );
 };
